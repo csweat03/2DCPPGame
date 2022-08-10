@@ -4,13 +4,16 @@
 * This class is the main game engine.
 */
 
-#include <list>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+
+#include "Enemy.h"
+#include "MilliTimer.h"
 
 class Game
 {
@@ -20,12 +23,15 @@ private:
 	sf::VideoMode videoMode;
 	sf::Event ev;
 
-	std::list<sf::RectangleShape> enemies;
+	sf::Vector2i mousePosition;
+
+	std::vector<Enemy> enemies;
+
+	MilliTimer timer;
 
 	// methods
 	void initVariables();
 	void initWindow();
-	void initEntities();
 
 public:
 	// constructors / destructors
@@ -38,6 +44,11 @@ public:
 
 	// methods
 	void pollEvents();
+	void updateMousePosition();
+
+	void updateEnemies();
 	void update();
+
+	void renderEnemies();
 	void render();
 };

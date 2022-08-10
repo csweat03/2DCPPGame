@@ -15,11 +15,6 @@ void Game::initWindow()
     this->window->setFramerateLimit(120);
 }
 
-void Game::initEntities()
-{
-    
-}
-
 Game::Game()
 {
 	this->initVariables();
@@ -53,16 +48,55 @@ void Game::pollEvents()
     }
 }
 
+void Game::updateMousePosition()
+{
+    this->mousePosition = sf::Mouse::getPosition(*this->window);
+}
+
+void Game::updateEnemies()
+{
+    if (this->enemies.size() <= 20)
+    {
+        if (this->timer.hasTimeElapsed(500))
+        {
+            Enemy enemy = Enemy();
+
+            enemy.spawnEnemy(window);
+
+            this->enemies.push_back(enemy);
+            this->timer.resetTimer();
+        }
+    }
+
+    for (auto &e : this->enemies)
+    {
+        e.updateEnemy(window);
+    }
+}
+
 void Game::update()
 {
     this->pollEvents();
+
+    this->updateMousePosition();
+
+    this->updateEnemies();
+}
+
+void Game::renderEnemies()
+{
+    for (Enemy enemy : this->enemies)
+    {
+        this->window->draw(enemy.getShape());
+    }
 }
 
 void Game::render()
 {
-    this->window->clear(sf::Color::Red);
+    this->window->clear();
 
     // do render stuff
+    this->renderEnemies();
 
     this->window->display();
 }
