@@ -12,28 +12,25 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include "Camera.h"
+#include "Player.h"
 #include "Enemy.h"
 #include "MilliTimer.h"
+#include "EntityManager.h"
+#include "Controller.h"
 
 class Game
 {
 private:
 	// declarations
-	sf::RenderWindow *window;
 	sf::VideoMode videoMode;
-	sf::Event ev;
-
+	
 	sf::Vector2i mousePosition;
-
-	std::vector<Enemy> enemies;
-
-	MilliTimer timer;
-
-	// methods
-	void initVariables();
-	void initWindow();
-
 public:
+	sf::RenderWindow* window;
+	Controller* controller;
+	EntityManager* entityManager;
+
 	// constructors / destructors
 	Game();
 	virtual ~Game();
@@ -41,14 +38,7 @@ public:
 	// accessors
 	const bool running() const;
 
-
 	// methods
-	void pollEvents();
-	void updateMousePosition();
-
-	void updateEnemies();
 	void update();
-
-	void renderEnemies();
 	void render();
 };

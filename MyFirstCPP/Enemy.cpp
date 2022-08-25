@@ -1,23 +1,25 @@
 #include "Enemy.h"
 
-void Enemy::spawnEnemy(sf::RenderWindow* window)
-{
-	shape.setPosition(sf::Vector2f(static_cast<float>(rand() % (window->getSize().x - 50)), 0.f));
-	shape.setSize(sf::Vector2f(25.f, 25.f));
+void Enemy::spawn() {
+	setPosition(Vector(static_cast<float>(rand() % (static_cast<int>(window->getSize().x) - 50)), 0));
+	shape.setSize(Vector(25, 25).cast());
 	shape.setFillColor(sf::Color::Cyan);
-}
+};
 
-void Enemy::updateEnemy(sf::RenderWindow* window)
+void Enemy::update()
 {
-	shape.move(0.f, 0.9f);
+	Entity::update();
+	// Move down
+	moveEntity(Vector(0.0f, 0.5f));
 
+	// Respawn enemy at top at same location
 	if (shape.getPosition().y > window->getSize().y)
 	{
-		shape.setPosition(static_cast<float>(rand() % (window->getSize().x - 50)), 0);
+		setPosition(sf::Vector2f(shape.getPosition().x - window->getPosition().x, 0));
 	}
 }
 
-sf::RectangleShape Enemy::getShape()
+void Enemy::render()
 {
-	return shape;
+	Entity::render();
 }

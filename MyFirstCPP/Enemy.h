@@ -1,15 +1,13 @@
 #pragma once
 
+#include "Entity.h"
 #include <SFML/Graphics.hpp>
 
-class Enemy
+class Enemy: public Entity
 {
-private:
-	sf::RectangleShape shape;
-
 public:
-	void spawnEnemy(sf::RenderWindow* window);
-	void updateEnemy(sf::RenderWindow* window);
-	sf::RectangleShape getShape();
+	void spawn() override;
+	void update() override;
+	void render() override;
 };
 
